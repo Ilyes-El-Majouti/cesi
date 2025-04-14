@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "titre": "Le Petit Prince",
+    "auteur": "Antoine de Saint-Exupéry"
+  },
+  {
+    "id": 2,
+    "titre": "L'Étranger",
+    "auteur": "Albert Camus"
+  },
+  {
+    "id": 3,
+    "titre": "Candide",
+    "auteur": "Voltaire"
+  },
+  {
+    "id": 4,
+    "titre": "Nouveau Livre",
+    "auteur": "Auteur Exemple"
+  },
+  {
+    "id": 5,
+    "titre": "Nouveau Livre",
+    "auteur": "Auteur Exemple"
+  },
+  {
+    "titre": "Nouveau Livre",
+    "auteur": "Auteur Exemple",
+    "id": 6
+  }
+]

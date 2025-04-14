@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Site de Bouquins</title>
+    </head>
+    <body>
+        <h1>Bienvenue sur le site de bouquins</h1>
+
+        <ul>
+            <li><a href="/livres" target="_blank">Voir la liste des
+                    livres</a></li>
+            <li><a href="/livres/1" target="_blank">Voir les détails du livre
+                    avec ID 1</a></li>
+            <li><a href="/recherche-livre/auteur/Voltaire"
+                    target="_blank">Rechercher les livres de Voltaire</a></li>
+        </ul>
+
+        <h2>Ajout d'un livre (test via fetch)</h2>
+        <button onclick="ajouterLivre()">Ajouter un livre</button>
+        <pre id="resultat"></pre>
+
+        <script>
+    function ajouterLivre() {
+      fetch('/ajout-livre', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: 4, titre: "Nouveau Livre", auteur: "Auteur Exemple" })
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('resultat').textContent = JSON.stringify(data, null, 2);
+      });
+    }
+  </script>
+    </body>
+</html>
