@@ -1,9 +1,12 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const Movie = require('./models/movie');
 
 const app = express();
+const mongoose = require('mongoose');
+const authRoutes = require('./routes/auth');
+const { auth, authorize } = require('./middlewares/auth');
 app.use(express.json());
+app.use('/auth', authRoutes);
 
 mongoose.connect('mongodb+srv://ilyeselmajouti:qezr1dOPhgyVM4qK@cluster0.nw8rh9y.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
     useNewUrlParser: true,
@@ -11,12 +14,10 @@ mongoose.connect('mongodb+srv://ilyeselmajouti:qezr1dOPhgyVM4qK@cluster0.nw8rh9y
 })
 .then(async () => {
     console.log('✅ Connecté à MongoDB');
-    await seedMovies(); // <-- Appel de la fonction ici
+    await seedMovies();
   })
     .catch((err) => console.error('❌ Erreur de connexion MongoDB:', err));
 
-
-// Fonction pour insérer 3 films par défaut
 async function seedMovies() {
     const count = await Movie.countDocuments();
     if (count === 0) {
@@ -48,7 +49,7 @@ async function seedMovies() {
     }
 }
 
-app.post('/movies', async (req, res) => {
+app.post('/movies', auth, authorize('Administrateur'), async (req, res) => {
     try {
         const movie = await Movie.create(req.body);
         res.status(201).json(movie);
@@ -57,7 +58,7 @@ app.post('/movies', async (req, res) => {
     }
 });
 
-app.get('/movies', async (req, res) => {
+app.get('/movies', auth, authorize('Visiteur', 'Administrateur'), async (req, res) => {
     try {
         const movies = await Movie.find();
         res.json(movies);
